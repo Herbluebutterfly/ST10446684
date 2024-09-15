@@ -1,3 +1,6 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 import java.util.regex.*;
 
 public class Login{
@@ -46,8 +49,57 @@ public class Login{
             return "Username or password is incorrect, please try again.";
         }
     }
-
-
     
+    public static void main(String[] args){
+        JFrame frame = new JFrame("Registration and Login");
+        frame.setSize(400, 300);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new GridLayout(7, 2));
+
+        JLabel firstNameLabel = new JLabel("First Name");
+        JTextField firstNameField = new JTextField();
+
+        JLabel lastNameLabel = new JLabel("Last Name");
+        JTextField lastNameField = new JTextField();
+
+        JLabel usernameLabel = new JLabel("Username");
+        JTextField usernameField = new JTextField();
+
+        JLabel passwordLabel = new JLabel("Password");
+        JPasswordField passwordField = new JPasswordField();
+
+        JLabel messageLabel = new JLabel("");
+
+        JButton registerButton = new JButton("Register");
+
+        registerButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+                String firstName = firstNameField.getText();
+                String lastName = lastNameField.getText();
+                String username = usernameField.getText();
+                String password = new String(passwordField.getPassword());
+
+                Login login = new Login(firstName, lastName, username, password);
+
+                String registrationMessage = login.registerUser();
+                messageLabel.setText(registrationMessage);
+
+            }
+        });
+       
+        frame.add(firstNameLabel);
+        frame.add(firstNameField);
+        frame.add(lastNameLabel);
+        frame.add(lastNameField);
+        frame.add(usernameLabel);
+        frame.add(usernameField);
+        frame.add(passwordLabel);
+        frame.add(passwordField);
+        frame.add(registerButton);
+        frame.add(messageLabel);
+        frame.setVisible(true);
+    }
 }
+
+
 
