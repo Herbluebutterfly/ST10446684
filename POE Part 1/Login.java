@@ -16,7 +16,7 @@ public class Login {
         this.lastName = lastName;
     }
 
-    // Method to check if the username is valid
+    // Method to validate username
     public boolean checkUserName(String username) {
         if (username.contains("_") && username.length() <= 5) {
             System.out.println("Username successfully captured.");
@@ -27,7 +27,7 @@ public class Login {
         }
     }
 
-    // Method to check if the password meets complexity requirements
+    // Method to validate password to make sure it meets requirements
     public boolean checkPasswordComplexity(String password) {
         String passwordPattern = "^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+=-]).{8,}$";
         Pattern pattern = Pattern.compile(passwordPattern);
@@ -41,7 +41,7 @@ public class Login {
         }
     }
 
-    // Method to verify login details
+    // Method to validate login details
     public boolean loginUser(String enteredUsername, String enteredPassword) {
         return this.username.equals(enteredUsername) && this.password.equals(enteredPassword);
     }
@@ -58,14 +58,14 @@ public class Login {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        // Get user's first name and last name
+        // Retrieve the user's first name and last name
         System.out.println("Register a new account");
         System.out.print("Enter your first name: ");
         String firstName = scanner.nextLine();
         System.out.print("Enter your last name: ");
         String lastName = scanner.nextLine();
 
-        // Validate username immediately after entry
+        // 
         String username;
         do {
             System.out.print("Enter your username: ");
