@@ -14,50 +14,30 @@ public class Login {
         this.lastName = lastName;
     }
 
-    // Method to check if first name is not empty
+    // Method #1: to check if first name is not empty
     public boolean checkFirstName(String firstName) {
-        if (firstName.length() == 0) {
-            System.out.println("First name cannot be empty");
-            return false;
-        }
-        return true;
+        return firstName.length() > 0;
     }
 
-    // Method to check if last name is not empty
+    // Method #2: to check if last name is not empty
     public boolean checkLastName(String lastName) {
-        if (lastName.length() == 0) {
-            System.out.println("Last name cannot be empty");
-            return false;
-        }
-        return true;
+        return lastName.length() > 0;
     }
 
-    // Method to validate username
+    // Method #3: to validate username
     public boolean checkUserName(String username) {
-        if (username.contains("_") && username.length() <= 5) {
-            System.out.println("Username successfully captured.");
-            return true;
-        } else {
-            System.out.println("Username is not correctly formatted, please ensure that your username contains an underscore and is no more than 5 characters in length.");
-            return false;
-        }
+        return username.contains("_") && username.length() <= 5;
     }
 
-    // Method to validate password complexity
+    // Method #4: to validate password complexity
     public boolean checkPasswordComplexity(String password) {
         String passwordPattern = "^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+=-]).{8,}$";
         Pattern pattern = Pattern.compile(passwordPattern);
         Matcher matcher = pattern.matcher(password);
-        if (matcher.matches()) {
-            System.out.println("Password successfully captured.");
-            return true;
-        } else {
-            System.out.println("Password is not correctly formatted, please ensure that the password contains at least 8 characters, a capital letter, a number, and a special character.");
-            return false;
-        }
+        return matcher.matches();
     }
 
-    // New registerUser() method
+    // Method #5: to confirm registration
     public String registerUser(String username, String password, String firstName, String lastName) {
         if (!checkFirstName(firstName)) {
             return "First name cannot be empty.";
@@ -75,15 +55,15 @@ public class Login {
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-        return "User successfully registered.";
+        return "Congratulations! You have successfully registered your account.";
     }
 
-    // Method to validate login details
+    // Method #6: to validate login details
     public boolean loginUser(String enteredUsername, String enteredPassword) {
         return this.username.equals(enteredUsername) && this.password.equals(enteredPassword);
     }
 
-    // Method to return login status
+    // Method #7: to return login status
     public String returnLoginStatus(boolean loginSuccess) {
         if (loginSuccess) {
             return "Welcome " + firstName + " " + lastName + ", it is great to see you again!";

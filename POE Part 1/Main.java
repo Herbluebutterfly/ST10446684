@@ -3,52 +3,96 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        Login login = new Login("", "", "", "");
 
-        System.out.println("Register a new account");
+        String firstName, lastName, username, password;
 
-        // Validate first name immediately after entry
-        String firstName;
-        do {
-            System.out.print("Enter your first name: ");
-            firstName = scanner.nextLine();
-        } while (!new Login("", "", firstName, "").checkFirstName(firstName));
+        System.out.println("Register a new account\n");
 
-        // Validate last name immediately after entry
-        String lastName;
-        do {
-            System.out.print("Enter your last name: ");
-            lastName = scanner.nextLine();
-        } while (!new Login("", "", firstName, lastName).checkLastName(lastName));
+        // Validate first name after entry 
+        boolean check = false;
+        System.out.println("Enter your first name:");
+        firstName = scanner.nextLine();
+        while (!check) {
+            if (login.checkFirstName(firstName)) {
+                check = true;
+            } else {
+                System.out.println("First name cannot be empty. \nRe-enter your first name: ");
+                firstName = scanner.nextLine();
+            }
+        }
 
-        // Validate username immediately after entry
-        String username;
-        do {
-            System.out.print("\nRemember your username must: \n- not exceed 5 characters  \n- contain an underscore \nEnter your username: ");
-            username = scanner.nextLine();
-        } while (!new Login(username, "", firstName, lastName).checkUserName(username));
+        // Validate last name after entry 
+        check = false;
+        System.out.println("Enter your last name:");
+        lastName = scanner.nextLine();
+        while (!check) {
+            if (login.checkLastName(lastName)) {
+                check = true;
+            } else {
+                System.out.println("Last name cannot be empty. \nRe-enter your last name: ");
 
-        // Validate password immediately after entry
-        String password;
-        do {
-            System.out.print("\nRemember your password must:  \n- contain at least 8 characters  \n- contain a capital letter  \n- contain a number  \n- contain a special character  \nEnter your password: ");
-            password = scanner.nextLine();
-        } while (!new Login(username, "", firstName, lastName).checkPasswordComplexity(password));
+                lastName = scanner.nextLine();
+            }
+        }
 
-     // Register user after validation
-     Login user = new Login(username, password, firstName, lastName);
-     String registrationMessage = user.registerUser(username, password, firstName, lastName);
-     System.out.println(registrationMessage);
+        // Validate username after entry 
+        check = false;
+        System.out.println("\nRemember your username must: \n- not exceed 5 characters  \n- contain an underscore \nEnter you username: ");
 
-     // Login user
-     System.out.println("\nLogin to your account:");
-     System.out.print("Enter your username: ");
-     String loginUsername = scanner.nextLine();
-     System.out.print("Enter your password: ");
-     String loginPassword = scanner.nextLine();
+        username = scanner.nextLine();
+        while (!check) {
+            if (login.checkUserName(username)) {
+                check = true;
+            } else {
+                System.out.println("Username is not correctly formatted. Please ensure that your username contains an underscore and is no more than 5 characters in length. \nRe-enter your usename: ");
+                username = scanner.nextLine();
+            }
+        }
 
-     boolean isLoggedIn = user.loginUser(loginUsername, loginPassword);
-     System.out.println(user.returnLoginStatus(isLoggedIn));
+        // Validate password after entry 
+        check = false;
+        System.out.println("\nRemember your password must:  \n- contain at least 8 characters  \n- contain a capital letter  \n- contain a special character \nEnter your password: ");
+        password = scanner.nextLine();
+        while (!check) {
+            if (login.checkPasswordComplexity(password)) {
+                check = true;
+            } else {
+                System.out.println("Password is not correctly formatted. Please ensure that the password contains at least 8 characters, a capital letter, a number, and a special character. \nPlease enter your password again:");
+                password = scanner.nextLine();
+            }
+        }
 
-     scanner.close();
- }
+        // Register the user after validation
+        System.out.println(login.registerUser(username, password, firstName, lastName));
+
+        // The user will login after registration
+
+        String loginUsername, loginPassword;
+        boolean loginSuccess = false;
+        
+        System.out.println("\nLogin to your account: \n");
+        
+        System.out.println("Enter your username: ");
+        loginUsername = scanner.nextLine();
+
+        System.out.println("Enter your password: ");
+        loginPassword = scanner.nextLine();
+
+        // Validate login details
+        while (!loginSuccess) {
+            loginSuccess = login.loginUser(loginUsername, loginPassword);
+            if (!loginSuccess) {
+                System.out.println("Login failed. Username or password is incorrect. \nRe-enter your username again: ");
+                loginUsername = scanner.nextLine();
+                System.out.println("Login failed. Username or password is incorrect. \nRe-enter your password again: ");
+                loginPassword = scanner.nextLine();
+            }
+        }
+
+        // Print login success message
+        System.out.println(login.returnLoginStatus(true));
+        
+        scanner.close();
+    }
 }
