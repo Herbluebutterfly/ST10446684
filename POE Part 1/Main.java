@@ -7,7 +7,7 @@ public class Main {
 
         String firstName, lastName, username, password;
 
-        System.out.println("Register a new account\n");
+        System.out.println("--Register a new account--\n");
 
         // Validate first name after entry 
         boolean check = false;
@@ -71,7 +71,7 @@ public class Main {
         String loginUsername, loginPassword;
         boolean loginSuccess = false;
         
-        System.out.println("\nLogin to your account: \n");
+        System.out.println("\n--Login to your account--\n");
         
         System.out.println("Enter your username: ");
         loginUsername = scanner.nextLine();
@@ -81,16 +81,16 @@ public class Main {
 
         // Validate login details
         while (!loginSuccess) {
-            loginSuccess = login.loginUser(loginUsername, loginPassword);
-            if (!loginSuccess) {
-                System.out.println("Login failed. Username or password is incorrect. \nRe-enter your username again: ");
+            if (login.loginUser(loginUsername, loginPassword)) {
+                loginSuccess = true;
+            } else {
+                System.out.println("Login failed. Username or password is incorrect.");
+                System.out.println("Re-enter your username: ");
                 loginUsername = scanner.nextLine();
-                System.out.println("Login failed. Username or password is incorrect. \nRe-enter your password again: ");
+                System.out.println("Re-enter your password: ");
                 loginPassword = scanner.nextLine();
             }
         }
-
-        // Print login success message
         System.out.println(login.returnLoginStatus(true));
         
         scanner.close();
