@@ -117,8 +117,6 @@ public class Main {
         scanner.close();
     }
 
-    Task task = new Task(null, null, null, 0, null);
-
     // Method to add tasks
     public static void addTasks() {
         String numTasksStr = JOptionPane.showInputDialog("How many tasks do you want to add?");
