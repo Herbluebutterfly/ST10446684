@@ -20,19 +20,59 @@ public class Task {
         taskCounter++;
     }
 
+        // Getter for taskName
+        public String getTaskName() {
+            return taskName;
+        }
+    
+        // Setter for taskName
+        public void setTaskName(String taskName) {
+            this.taskName = taskName;
+        }
+    
+        // Getter for developerName
+        public String getDeveloperDetails() {
+            return developerDetails;
+        }
+    
+        // Setter for developerName
+        public void setDeveloperName(String developerDetails) {
+            this.developerDetails = developerDetails;
+        }
+    
+        // Getter for duration
+        public int getTaskDuration() {
+            return taskDuration;
+        }
+    
+        // Setter for duration
+        public void setDuration(int taskDuration) {
+            this.taskDuration = taskDuration;
+        }
+    
+        // Getter for status
+        public String getTaskStatus() {
+            return taskStatus;
+        }
+    
+        // Setter for status
+        public void setTaskStatus(String taskStatus) {
+            this.taskStatus = taskStatus;
+        }
+
     // Method #1: validate the choice numbered 1-3
     public static int validateChoice(String input) {
         int choice = -1;
 
         try {
             choice = Integer.parseInt(input);  // Convert input to an integer
-            if (choice < 1 || choice > 3) {
-                JOptionPane.showMessageDialog(null, "Invalid option. Please enter a number between 1 and 3.");
+            if (choice < 1 || choice > 8) {
+                JOptionPane.showMessageDialog(null, "Invalid option. Please enter a number between 1 and 8.");
                 choice = -1;  // Reset choice if out of valid range
             }
         } catch (NumberFormatException e) {
             // Handle the case where the input is not a valid integer
-            JOptionPane.showMessageDialog(null, "Invalid input. Please enter a valid number (1-3).");
+            JOptionPane.showMessageDialog(null, "Invalid input. Please enter a valid number (1-8).");
         }
 
         return choice;  // Return the validated choice or -1 if invalid
@@ -70,7 +110,7 @@ public class Task {
     public String createTaskID() {
         String initials = taskName.substring(0, 2).toUpperCase();
         String lastThreeLetters = developerDetails.length() >= 3 ? developerDetails.substring(developerDetails.length() - 3).toUpperCase() : "XXX";
-        return initials + ":" + (taskCounter - 1) + ":" + lastThreeLetters;
+        return initials + ":" + taskCounter + ":" + lastThreeLetters;
     }
 
     //Method #6: to display task details
