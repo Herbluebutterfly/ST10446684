@@ -1,3 +1,4 @@
+package src;
 import java.util.Scanner;
 import javax.swing.*;
 
@@ -91,33 +92,42 @@ public class Main {
 
         window.setAlwaysOnTop(loginSuccess);
 
-        // Main menu after successful login
+        // After a successful login, the welcome menue appears
         boolean running = true;
+
         while (running) {
-            String[] options = {"Add tasks", "Show report", "Quit"};
-            int choice = JOptionPane.showOptionDialog(null, "Welcome to EasyKanban", "EasyKanban Menu",
-                    JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+            // Show menu options using JOptionPane and ask for user input
+            String input = JOptionPane.showInputDialog(null, "Welcome to EasyKanban\n\n" +
+                "1. Add tasks\n" +
+                "2. Show report\n" +
+                "3. Quit\n");
+
+            // it uses validation method located in the task class
+            int choice = Task.validateChoice(input);
 
             switch (choice) {
-                case 0:
+                case 1:
                     addTasks();  // Call method to add tasks
                     break;
-                case 1:
+                case 2:
                     JOptionPane.showMessageDialog(null, "Coming Soon"); // Placeholder for report feature
                     break;
-                case 2:
+                case 3:
                     running = false; // Exit the loop to quit
                     JOptionPane.showMessageDialog(null, "Thank you for using EasyKanban!");
                     break;
                 default:
-                    JOptionPane.showMessageDialog(null, "Invalid option. Please try again.");
+                    // No need for this case as invalid input is handled in validateChoice
+                    break;
             }
         }
+    
+
 
         scanner.close();
     }
 
-    // Method to add tasks
+    // Method to create tasks
     public static void addTasks() {
         String numTasksStr = JOptionPane.showInputDialog("How many tasks do you want to add?");
         int numTasks = Integer.parseInt(numTasksStr);
@@ -125,24 +135,37 @@ public class Main {
         Task[] tasks = new Task[numTasks];
 
         for (int i = 0; i < numTasks; i++) {
-            String taskName = JOptionPane.showInputDialog("Enter Task Name:");
+             // Validate task name
+             String taskName;
+             boolean validTaskName = false;
+             do {
+                 taskName = JOptionPane.showInputDialog("Enter Task Name:");
+                 validTaskName = Task.validateTaskName(taskName);
+             } while (!validTaskName);
+ 
+             // to check the  task name is not empty
+             String taskDescription;
+             boolean validDescription = false;
+             do {
+                 taskDescription = JOptionPane.showInputDialog("Enter Task Description (max 50 characters):");
+                 Task tempTask = new Task(taskName, taskDescription, "", 0, "");
+                 validDescription = tempTask.checkTaskDescription();
+                 if (validDescription) {
+                     JOptionPane.showMessageDialog(null, "Task successfully captured");
+                 } else {
+                     JOptionPane.showMessageDialog(null, "Please enter a task description of less than 50 characters.");
+                 }
+             } while (!validDescription);
+ 
+             // to check if the developer entered first and last name
+             String developerDetails;
+             boolean validDeveloperDetails = false;
+             do {
+                 developerDetails = JOptionPane.showInputDialog("Enter Developer's first and last name:");
+                 validDeveloperDetails = Task.validateDeveloperDetails(developerDetails);
+             } while (!validDeveloperDetails);
 
-            String taskDescription;
-            boolean validDescription;
-            do {
-                taskDescription = JOptionPane.showInputDialog("Enter Task Description (max 50 characters):");
-                Task tempTask = new Task(taskName, taskDescription, "", 0, "");
-                validDescription = tempTask.checkTaskDescription();
-                if (validDescription) {
-                    JOptionPane.showMessageDialog(null, "Task successfully captured");
-                } else {
-                    JOptionPane.showMessageDialog(null, "Please enter a task description of less than 50 characters");
-                }
-            } while (!validDescription);
-
-            String developerDetails = JOptionPane.showInputDialog("Enter Developer Details:");
-
-            String taskDurationStr = JOptionPane.showInputDialog("Enter Task Duration (hours):");
+            String taskDurationStr = JOptionPane.showInputDialog("Enter Task Duration (in hours):");
             int taskDuration = Integer.parseInt(taskDurationStr);
 
             String[] statusOptions = {"To Do", "Done", "Doing"};
@@ -157,6 +180,6 @@ public class Main {
         }
 
         int totalHours = Task.returnTotalHours(tasks);
-        JOptionPane.showMessageDialog(null, "Total hours for all tasks: " + totalHours);
+        JOptionPane.showMessageDialog(null, "Total hours for all tasks: " + totalHours);     
     }
 }
