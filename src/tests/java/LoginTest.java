@@ -111,7 +111,7 @@ public class LoginTest {
     @Test
     public void testLoginFailed() {
         Login login = new Login("kyl_1", "Ch&&sec@ke99!", "John", "Doe");
-        boolean isLoginSuccessful = login.loginUser("kyl1", "wrongpassword");
+        boolean isLoginSuccessful = login.loginUser("kyl_1", "wrongpassword");
         assertFalse("Login should fail with incorrect password", isLoginSuccessful);
     }
 
