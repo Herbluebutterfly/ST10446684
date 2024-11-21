@@ -3,7 +3,7 @@ name: Java CI with Maven
 on:
   push:
     branches:
-      - main  # or any branch you want to run the action on
+      - main  
   pull_request:
     branches:
       - main
