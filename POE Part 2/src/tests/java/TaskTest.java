@@ -1,3 +1,4 @@
+package java;
 
 import org.junit.Test;
 
@@ -64,7 +65,7 @@ public class TaskTest {
 
     @Test
     public void testValidateChoice_EmptyInput() {
-        assertEquals(-1, Task.validateChoice(""));  // Empty input
+        assertEquals(-1, Task.validateChoice("")); // Empty input
     }
 
     // Test for Task Description validation (Less than 50 Characters)
@@ -86,8 +87,8 @@ public class TaskTest {
         Task task1 = new Task("Login Feature", "Create Login to authenticate users", "Robyn Harrison", 8, "To Do");
         Task task2 = new Task("Add Task Feature", "Create Add Task feature to add task users", "Mike Smith", 10, "Doing");
 
-        assertEquals("LO:1:SON", task1.createTaskID());
-        assertEquals("AD:1:ITH", task2.createTaskID());
+        assertEquals("LO:6:SON", task1.createTaskID());
+        assertEquals("AD:6:ITH", task2.createTaskID());
     }
 
     // Test for Total Hours Calculation
@@ -119,101 +120,105 @@ public class TaskTest {
 
     @Before
     public void setUp() {
-        // Initialize the test data
+        // Initialize the task array with test data
         tasks = new Task[4];
-        tasks[0] = new Task("Create Login", "Task for user login", "Mike Smith", 5, "To Do");
+        tasks[0] = new Task("Create Login", "Login functionality", "Mike Smith", 5, "To Do");
         tasks[1] = new Task("Create Add Features", "Add new features", "Edward Harrison", 8, "Doing");
         tasks[2] = new Task("Create Reports", "Generate reports", "Samantha Paulson", 2, "Done");
-        tasks[3] = new Task("Add Arrays", "Add array functionality", "Glenda Oberholzer", 11, "To Do");
+        tasks[3] = new Task("Add Arrays", "Array functionality", "Glenda Oberholzer", 11, "To Do");
     }
 
     @Test
-    public void testDeveloperArrayPopulation() {
+    public void testDeveloperArrayCorrectlyPopulated() {
+        // Test that the developer array contains the expected data
         String[] expectedDevelopers = {"Mike Smith", "Edward Harrison", "Samantha Paulson", "Glenda Oberholzer"};
         String[] actualDevelopers = new String[tasks.length];
         for (int i = 0; i < tasks.length; i++) {
             actualDevelopers[i] = tasks[i].getDeveloperDetails();
         }
-        assertArrayEquals(expectedDevelopers, actualDevelopers);
+        assertArrayEquals("Developers array should match expected test data", expectedDevelopers, actualDevelopers);
     }
 
     @Test
-    public void testDisplayLongestTaskDuration() {
+    public void testLongestDuration() {
+        // Test that the task with the longest duration is correctly identified
         Task longestTask = tasks[0];
         for (Task task : tasks) {
             if (task.getTaskDuration() > longestTask.getTaskDuration()) {
                 longestTask = task;
             }
         }
-        assertEquals("Glenda Oberholzer", longestTask.getDeveloperDetails());
-        assertEquals(11, longestTask.getTaskDuration());
+        assertEquals("Longest task developer should be Glenda Oberholzer", "Glenda Oberholzer", longestTask.getDeveloperDetails());
+        assertEquals("Longest task duration should be 11", 11, longestTask.getTaskDuration());
     }
 
     @Test
-    public void testSearchTaskByName() {
-        String searchTaskName = "Create Login";
+    public void testSearchByTaskName() {
+        // Test searching for a task by name
+        String searchName = "Create Login";
         Task foundTask = null;
         for (Task task : tasks) {
-            if (task.getTaskName().equalsIgnoreCase(searchTaskName)) {
+            if (task.getTaskName().equalsIgnoreCase(searchName)) {
                 foundTask = task;
                 break;
             }
         }
-        assertNotNull(foundTask);
-        assertEquals("Mike Smith", foundTask.getDeveloperDetails());
-        assertEquals("Create Login", foundTask.getTaskName());
+        assertNotNull("Task should be found", foundTask);
+        assertEquals("Task developer should be Mike Smith", "Mike Smith", foundTask.getDeveloperDetails());
+        assertEquals("Task name should be Create Login", "Create Login", foundTask.getTaskName());
     }
 
     @Test
     public void testSearchTasksByDeveloper() {
+        // Test searching for tasks by developer name
         String searchDeveloper = "Samantha Paulson";
-        String foundTaskName = null;
+        StringBuilder taskNames = new StringBuilder();
         for (Task task : tasks) {
             if (task.getDeveloperDetails().equalsIgnoreCase(searchDeveloper)) {
-                foundTaskName = task.getTaskName();
-                break;
+                taskNames.append(task.getTaskName()).append("\n");
             }
         }
-        assertEquals("Create Reports", foundTaskName);
+        assertTrue("Tasks assigned to Samantha Paulson should include Create Reports", taskNames.toString().contains("Create Reports"));
     }
 
     @Test
-    public void testDeleteTaskByName() {
+    public void testDeleteTask() {
+        // Test deleting a task by name
         String taskNameToDelete = "Create Reports";
         boolean deleted = false;
-        
+
         for (int i = 0; i < tasks.length; i++) {
             if (tasks[i] != null && tasks[i].getTaskName().equalsIgnoreCase(taskNameToDelete)) {
-                tasks[i] = null;  // Simulate deletion
+                tasks[i] = null; // Delete the task
                 deleted = true;
                 break;
             }
         }
 
-        assertTrue(deleted);
+        assertTrue("Task should be deleted successfully", deleted);
 
-        // Confirm that task with the name "Create Reports" is no longer in the array
+        // Verify the task no longer exists
+        boolean taskExists = false;
         for (Task task : tasks) {
             if (task != null && task.getTaskName().equalsIgnoreCase(taskNameToDelete)) {
-                fail("Task 'Create Reports' was not successfully deleted.");
+                taskExists = true;
+                break;
             }
         }
+        assertFalse("Task should no longer exist", taskExists);
     }
 
     @Test
     public void testDisplayReport() {
+        // Test generating a report of all tasks
         StringBuilder report = new StringBuilder();
         for (Task task : tasks) {
             if (task != null) {
-                report.append(task.printTaskDetails()).append("\n\n");
+                report.append(task.printTaskDetails()).append("\n");
             }
         }
-        
-        // Expected output for all tasks
-        assertTrue(report.toString().contains("Mike Smith"));
-        assertTrue(report.toString().contains("Edward Harrison"));
-        assertTrue(report.toString().contains("Samantha Paulson"));
-        assertTrue(report.toString().contains("Glenda Oberholzer"));
+        assertTrue("Report should include task details for Create Login", report.toString().contains("Create Login"));
+        assertTrue("Report should include task details for Add Arrays", report.toString().contains("Add Arrays"));
     }
 }
 

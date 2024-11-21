@@ -124,12 +124,13 @@ public class Task {
                "Task Duration: " + taskDuration + " hours";
     }
 
-    //Method #7: to calculate total task hours
+    // Method #7: to calculate total task hours
     public static int returnTotalHours(Task[] tasks) {
         int totalHours = 0;
-        for (Task task : tasks) {
-            totalHours += task.taskDuration;
+        for (int i = 0; i < tasks.length; i++) {
+            totalHours += tasks[i].taskDuration;
         }
         return totalHours;
     }
+
 }
