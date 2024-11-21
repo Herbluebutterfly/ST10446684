@@ -8,6 +8,8 @@ import static org.junit.Assert.*;
 
 public class LoginTest {
 
+    //Part 1 unit testing:
+
     //Test #1: check if first name is not empty 
 
     @Test
