@@ -7,13 +7,13 @@ This project is a **Java-based task management system** developed for the **Prog
 
 ## 📁 Project Structure
 
-POE Part 3/
-├── .vscode/ # VS Code settings
-├── lib/ # External libraries (e.g., JUnit)
-├── src/
-│ └── java/ # Source code: Login, Task and Main
-├── tests/
-│ └── java/ # Unit tests for Login and Task classes
+📦 POE Part 3
+├── 📁 .vscode         # VS Code workspace settings
+├── 📁 lib             # External libraries (e.g. JUnit jars)
+├── 📁 src
+│   └── 📁 java        # Source code (Login.java, Task.java, Main.java, etc.)
+├── 📁 tests
+│   └── 📁 java        # Unit test classes (LoginTest.java, TaskTest.java, etc.)
 
 
 ---
